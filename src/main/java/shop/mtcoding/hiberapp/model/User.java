@@ -8,10 +8,16 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.CreationTimestamp;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+@Setter // dto로 받으면 여기에 setter 안해도 된다.
 @Getter
 // ORM을 실현해주는 하이버네이터 라는 얘가 항상 디폴트 생성자를 부른다.
 @NoArgsConstructor
@@ -22,8 +28,10 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY) // 데이터 베이스의 정체성에 맞게 사용하라.
     private Long id;
     private String username;
+    @JsonIgnore // 얘는 파싱하지 마라...: 화면에 표시 안할 데이터
     private String password;
     private String email;
+    @CreationTimestamp
     private Timestamp createdAt;
 
     // public void save(String username, String password, String email){

@@ -5,6 +5,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import lombok.RequiredArgsConstructor;
 
@@ -14,16 +15,19 @@ public class UserRepository {
     private final EntityManager em;
     // User user = User.builder().email("1234").id(1L);
 
+    @Transactional
     public User save(User user) {
         em.persist(user);
         return user;
     };
 
+    @Transactional
     public User update(User user) {
         // primary key 가 있는 키면 업데이트 해주고 없으면 insert를 해줌... 주의
         return em.merge(user);
     };
 
+    @Transactional
     public void delete(User user) {
         em.remove(user);
     };
